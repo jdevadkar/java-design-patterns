@@ -1,17 +1,25 @@
 package com.junit5.patientintake;
 
-import java.io.ObjectInputStream.GetField;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * The Class ClinicMain.
+ */
 public class ClinicMain {
+
+	/** The calender. */
 	private static ClinicCalender calender;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Throwable the throwable
+	 */
 	public static void main(String[] args) throws Throwable {
 		calender = new ClinicCalender(LocalDate.now());
 		Scanner scanner = new Scanner(System.in);
@@ -23,6 +31,13 @@ public class ClinicMain {
 		System.out.println("\n Exiting System...\n");
 	}
 
+	/**
+	 * Display menu.
+	 *
+	 * @param scanner the scanner
+	 * @return the string
+	 * @throws Throwable the throwable
+	 */
 	private static String displayMenu(Scanner scanner) throws Throwable {
 		System.out.println("Please select an option:");
 		System.out.println("1. Enter a Patient Appontment");
@@ -52,6 +67,11 @@ public class ClinicMain {
 		}
 	}
 
+	/**
+	 * Perform patient entry.
+	 *
+	 * @param scanner the scanner
+	 */
 	private static void performPatientEntry(Scanner scanner) {
 		scanner.nextLine();
 		System.out.println("\n\nPlease Enter Appointment Info:");
@@ -72,6 +92,11 @@ public class ClinicMain {
 		System.out.println("Patient entered successfully.\n\n");
 	}
 
+	/**
+	 * Perform all appoinments.
+	 *
+	 * @throws Throwable the throwable
+	 */
 	private static void performAllAppoinments() throws Throwable {
 		System.out.println("\n\n All Appointments in System");
 		for (PatientAppointment appointment : calender.getAppointments()) {
@@ -84,9 +109,35 @@ public class ClinicMain {
 
 	}
 
-	private static void performTodayAppointments() {
+	/**
+	 * Perform today appointments.
+	 *
+	 * @throws Throwable the throwable
+	 */
+	private static void performTodayAppointments() throws Throwable {
+		System.out.println("\n\n Appoientments for Today:");
+		listAppoinnments(calender.getAppointments());
 	}
 
+	/**
+	 * List appoinnments.
+	 *
+	 * @param appointments the appointments
+	 */
+	private static void listAppoinnments(List<PatientAppointment> appointments) {
+		for (PatientAppointment appointment : appointments) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy hh:mm a");
+			String apptTime = formatter.format(appointment.getAppointmentDateTime());
+			System.out.println(String.format("%s: %s, %s\t\t Doctor: %s", apptTime, appointment.getPatientLastName(),
+					appointment.getPatientFirstName(), appointment.getDoctor().getName()));
+		}
+	}
+
+	/**
+	 * Perform height weight.
+	 *
+	 * @param scanner the scanner
+	 */
 	private static void performHeightWeight(Scanner scanner) {
 		scanner.nextLine();
 		System.out.println("\n\nEntere parient height and weight for today's appointment:");
@@ -108,6 +159,13 @@ public class ClinicMain {
 		}
 	}
 
+	/**
+	 * Find patient appointment.
+	 *
+	 * @param lastName  the last name
+	 * @param firstName the first name
+	 * @return the optional
+	 */
 	private static Optional<PatientAppointment> findPatientAppointment(String lastName, String firstName) {
 		return calender.getAppointments().stream().filter(p -> (p.getPatientLastName().equalsIgnoreCase(lastName)
 				&& p.getPatientFirstName().equalsIgnoreCase(firstName))).findFirst();

@@ -6,8 +6,18 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ * The Class DateTimeConverter.
+ */
 public class DateTimeConverter {
 
+	/**
+	 * Convert string to date time.
+	 *
+	 * @param dateTime the date time
+	 * @param today    the today
+	 * @return the local date time
+	 */
 	public static LocalDateTime convertStringToDateTime(String dateTime, LocalDate today) {
 		LocalDateTime localDateTime;
 		try {
@@ -26,5 +36,4 @@ public class DateTimeConverter {
 		}
 		return localDateTime;
 	}
-
 }

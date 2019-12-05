@@ -10,13 +10,23 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class DateTimeConverterTest.
+ */
 @Tag("dateTime")
 @DisplayName("DateTimeConverter Test")
 class DateTimeConverterTest {
 
+	/**
+	 * The Class TodayTests.
+	 */
 	@Nested
 	@DisplayName("convert string with 'today' keyword")
 	class TodayTests {
+		
+		/**
+		 * Convert today string correctly.
+		 */
 		@Test
 		@DisplayName(" correctly")
 		void convertTodayStringCorrectly() {
@@ -26,6 +36,9 @@ class DateTimeConverterTest {
 					() -> "Failed to convert 'today' String to expected data time, today passed was:" + today);
 		}
 
+		/**
+		 * Convert today string correctly case insensitive.
+		 */
 		@Test
 		@DisplayName(" regardless of case")
 		void convertTodayStringCorrectlyCaseInsensitive() {
@@ -37,6 +50,9 @@ class DateTimeConverterTest {
 
 	}
 
+	/**
+	 * Convert correct pattern to date time.
+	 */
 	@Test
 	@DisplayName("convert expected date time pattern in string correctly")
 	void convertCorrectPatternToDateTime() {
@@ -45,6 +61,9 @@ class DateTimeConverterTest {
 		assertEquals(result, LocalDateTime.of(2018, 9, 2, 13, 0));
 	}
 
+	/**
+	 * Throw exception if incorrect pattern provided.
+	 */
 	@Test
 	@DisplayName("throw exception if entered pattern of string incorrect")
 	void throwExceptionIfIncorrectPatternProvided() {

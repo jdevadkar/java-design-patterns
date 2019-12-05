@@ -12,15 +12,25 @@ import com.junit5.patientintake.ClinicCalender;
 import com.junit5.patientintake.Doctor;
 import com.junit5.patientintake.PatientAppointment;
 
+/**
+ * The Class UpcomingAppointmentnotifierTest.
+ */
 class UpcomingAppointmentnotifierTest {
 
+	/** The email double. */
 	private EmailNotifierTestDouble emailDouble;
 
+	/**
+	 * Inits the.
+	 */
 	@BeforeEach
 	void init() {
 		emailDouble = new EmailNotifierTestDouble();
 	}
 
+	/**
+	 * Sendnotification with correct format.
+	 */
 	@Test
 	void sendnotificationWithCorrectFormat() {
 		ClinicCalender calender = new ClinicCalender(LocalDate.of(2018, 8, 26));
@@ -37,5 +47,4 @@ class UpcomingAppointmentnotifierTest {
 				() -> assertEquals("You have an appointment tomorrow at 2:00 PM " + "with Dr. Ralph Avery.",
 						expectedMessage.body));
 	}
-
 }
