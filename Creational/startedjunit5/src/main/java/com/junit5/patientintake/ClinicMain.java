@@ -1,7 +1,12 @@
 package com.junit5.patientintake;
 
+import java.io.ObjectInputStream.GetField;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ClinicMain {
@@ -23,6 +28,7 @@ public class ClinicMain {
 		System.out.println("1. Enter a Patient Appontment");
 		System.out.println("2. View All Apponetments");
 		System.out.println("3. View Today's Appointments");
+		System.out.println("4. Enter Patient Height Weight");
 		System.out.println("X. Exit System.");
 		System.out.println("Optiion:");
 		String option = scanner.next();
@@ -36,6 +42,9 @@ public class ClinicMain {
 			return option;
 		case "3":
 			performTodayAppointments();
+			return option;
+		case "4":
+			performHeightWeight(scanner);
 			return option;
 		default:
 			System.out.println("Invalid option, please re-enter.");
@@ -76,7 +85,31 @@ public class ClinicMain {
 	}
 
 	private static void performTodayAppointments() {
-
 	}
 
+	private static void performHeightWeight(Scanner scanner) {
+		scanner.nextLine();
+		System.out.println("\n\nEntere parient height and weight for today's appointment:");
+		System.out.println(" Patient LastName");
+		String lastName = scanner.nextLine();
+		System.out.println(" Patient First Name: ");
+		String firstName = scanner.nextLine();
+		PatientAppointment appt = findPatientAppointment(lastName, firstName).orElse(null);
+		if (appt != null) {
+			System.out.println(" Height in Inches: ");
+			Integer inches = scanner.nextInt();
+			System.out.println(" Weight in Pounds: ");
+			Integer pounds = scanner.nextInt();
+			double roundedToTwoPlaces = BMICalculator.calculateBmi(inches, pounds);
+			appt.setBmi(roundedToTwoPlaces);
+			System.out.println("Set patient BMI to " + roundedToTwoPlaces + "\n\n");
+		} else {
+			System.out.println();
+		}
+	}
+
+	private static Optional<PatientAppointment> findPatientAppointment(String lastName, String firstName) {
+		return calender.getAppointments().stream().filter(p -> (p.getPatientLastName().equalsIgnoreCase(lastName)
+				&& p.getPatientFirstName().equalsIgnoreCase(firstName))).findFirst();
+	}
 }
